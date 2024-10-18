@@ -17,10 +17,6 @@ proxy:
     path: /ping
     timeout: 3
 
-env:
-  secret:
-    - REDIS_URL
-
 ssh:
   user: root
   port: 25022
@@ -33,7 +29,8 @@ builder:
 accessories:
   redis:
     image: redis:7.2
-    host: kamal-redis.home
+    roles:
+      - web
     port: 6379
-    directories:
-      - data:/data
+    volumes:
+      - /var/lib/redis:/data

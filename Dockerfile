@@ -1,6 +1,6 @@
 FROM golang:1.22 AS builder
 
-ARG BUILD_VERSION
+ARG VERSION
 
 WORKDIR /build
 

@@ -9,6 +9,8 @@ import (
 	"github.com/redis/go-redis/v9"
 )
 
+var version string
+
 func main() {
 	http.HandleFunc("/", indexHandler)
 	http.HandleFunc("/ping", pingHandler)
@@ -20,8 +22,9 @@ func main() {
 }
 
 func indexHandler(w http.ResponseWriter, r *http.Request) {
+	fmt.Fprintf(w, "version: %s\n", version)
 	redisURL := os.Getenv("REDIS_URL")
-	fmt.Fprintf(w, "redisURL: %s", redisURL)
+	fmt.Fprintf(w, "redisURL: %s\n", redisURL)
 	opts, err := redis.ParseURL(redisURL)
 	if err != nil {
 		fmt.Fprintf(w, "解析Redis URL失败: %v\n", err)

@@ -24,7 +24,7 @@ func indexHandler(w http.ResponseWriter, r *http.Request) {
 	fmt.Fprintf(w, "redisURL: %s", redisURL)
 
 	client := redis.NewClient(&redis.Options{
-		Addr: redisURL,
+		Addr: "redis://redis:6379",
 	})
 
 	defer client.Close()

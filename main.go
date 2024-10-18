@@ -3,7 +3,6 @@ package main
 import (
 	"fmt"
 	"net/http"
-	"os"
 	"strings"
 
 	"github.com/redis/go-redis/v9"
@@ -20,11 +19,8 @@ func main() {
 }
 
 func indexHandler(w http.ResponseWriter, r *http.Request) {
-	redisURL := os.Getenv("REDIS_URL")
-	fmt.Fprintf(w, "redisURL: %s", redisURL)
-
 	client := redis.NewClient(&redis.Options{
-		Addr: "redis://redis:6379",
+		Addr: "redis://hey-redis:6379",
 	})
 
 	defer client.Close()
@@ -32,7 +28,7 @@ func indexHandler(w http.ResponseWriter, r *http.Request) {
 	ctx := r.Context()
 	info, err := client.Info(ctx).Result()
 	if err != nil {
-		fmt.Printf("获取Redis信息失败: %v\n", err)
+		fmt.Fprintf(w, "获取Redis信息失败: %v\n", err)
 		http.Error(w, "内部服务器错误", http.StatusInternalServerError)
 		return
 	}

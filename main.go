@@ -19,9 +19,14 @@ func main() {
 }
 
 func indexHandler(w http.ResponseWriter, r *http.Request) {
-	client := redis.NewClient(&redis.Options{
-		Addr: "redis://hey-redis:6379",
-	})
+	opts, err := redis.ParseURL("redis://redis:6379")
+	if err != nil {
+		fmt.Fprintf(w, "解析Redis URL失败: %v\n", err)
+		http.Error(w, "内部服务器错误", http.StatusInternalServerError)
+		return
+	}
+
+	client := redis.NewClient(opts)
 
 	defer client.Close()
 

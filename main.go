@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"net/http"
+	"os"
 	"strings"
 
 	"github.com/redis/go-redis/v9"
@@ -19,7 +20,9 @@ func main() {
 }
 
 func indexHandler(w http.ResponseWriter, r *http.Request) {
-	opts, err := redis.ParseURL("redis://redis:6379")
+	redisURL := os.Getenv("REDIS_URL")
+	fmt.Fprintf(w, "redisURL: %s", redisURL)
+	opts, err := redis.ParseURL(redisURL)
 	if err != nil {
 		fmt.Fprintf(w, "解析Redis URL失败: %v\n", err)
 		http.Error(w, "内部服务器错误", http.StatusInternalServerError)

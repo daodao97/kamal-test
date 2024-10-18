@@ -1,7 +1,12 @@
 service: hey
 image: daodao97/kamal-test
 servers:
-  - 104.194.87.196
+  web:
+    hosts:
+      - 104.194.87.196
+    env:
+      - REDIS_URL=redis://redis:6379
+
 registry:
   server: ghcr.io
   username: daodao97
@@ -28,7 +33,7 @@ builder:
 
 accessories:
   redis:
-    image: redis:7.2
+    image: redis:latest
     roles:
       - web
     volumes:

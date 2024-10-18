@@ -11,7 +11,7 @@ registry:
   server: ghcr.io
   username: daodao97
   password:
-    - KAMAL_REGISTRY_USERNAME
+    - KAMAL_REGISTRY_PASSWORD
 
 proxy:
   ssl: true

@@ -11,6 +11,10 @@ kamal deploy
 kamal accessory boot redis
 
 kamal accessory reboot redis
+
+kamal app containers
+
+kamal rollback {git commit id}
 ```
 
 

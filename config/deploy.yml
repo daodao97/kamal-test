@@ -31,7 +31,7 @@ ssh:
 builder:
   arch: amd64
   args:
-    VERSION: 1.0.0
+    VERSION: ${VERSION}
 
 accessories:
   redis:

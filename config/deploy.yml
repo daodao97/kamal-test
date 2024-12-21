@@ -3,7 +3,7 @@ image: daodao97/kamal-test
 servers:
   web:
     hosts:
-      - 104.194.87.196
+      - 104.194.82.52 
     env:
       REDIS_URL: redis://hey-redis:6379
 

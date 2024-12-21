@@ -22,7 +22,7 @@ func main() {
 }
 
 func indexHandler(w http.ResponseWriter, r *http.Request) {
-	fmt.Fprintf(w, "version: %s\n", version)
+	fmt.Fprintf(w, "version1: %s\n", version)
 	redisURL := os.Getenv("REDIS_URL")
 	fmt.Fprintf(w, "redisURL: %s\n", redisURL)
 	opts, err := redis.ParseURL(redisURL)

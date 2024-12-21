@@ -30,7 +30,7 @@ func main() {
 func h() http.Handler {
 	e := xapp.NewGin()
 	e.GET("/ping", func(c *gin.Context) {
-		c.JSON(http.StatusOK, gin.H{"version": version})
+		c.JSON(http.StatusOK, gin.H{"version": version, "config": conf.Get()})
 	})
 	return e.Handler()
 }

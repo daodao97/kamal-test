@@ -1,0 +1,2 @@
+redis:
+  addr: hey-redis:6379

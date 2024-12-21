@@ -4,6 +4,7 @@ servers:
   web:
     hosts:
       - 104.194.82.52 
+    scale: 2
     env:
       REDIS_URL: redis://hey-redis:6379
 

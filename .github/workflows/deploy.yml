@@ -1,0 +1,38 @@
+name: Deploy
+concurrency:
+  group: production
+  cancel-in-progress: true
+on:
+  push:
+    tags:
+      - 'v*'
+      
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    env:
+      KAMAL_REGISTRY_PASSWORD: ${{ secrets.KAMAL_REGISTRY_PASSWORD }}
+      VERSION: ${{ github.ref_name }}
+    steps:
+      - uses: actions/checkout@v4
+      - name: Set version without v prefix
+        run: echo "VERSION=${VERSION#v}" >> $GITHUB_ENV
+      - name: Login to GitHub Container Registry
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.KAMAL_REGISTRY_PASSWORD }}
+      - uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: 3.3.0
+          bundler-cache: true
+      - run: gem install kamal
+      - uses: webfactory/ssh-agent@v0.9.0
+        with:
+          ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
+      - uses: docker/setup-buildx-action@v3
+      - run: kamal secrets print
+      - run: kamal lock release
+      - run: kamal redeploy
+ 

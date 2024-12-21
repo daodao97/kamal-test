@@ -1,0 +1,42 @@
+service: hey
+image: daodao97/kamal-test
+servers:
+  web:
+    hosts:
+      - 104.194.82.52 
+    env:
+      REDIS_URL: redis://hey-redis:6379
+
+registry:
+  server: ghcr.io
+  username: daodao97
+  password:
+    - KAMAL_REGISTRY_PASSWORD
+
+proxy:
+  ssl: true
+  host: kamal.chatbee.cc
+  app_port: 8001
+  healthcheck:
+    interval: 3
+    path: /ping
+    timeout: 3
+
+ssh:
+  user: root
+  port: 25022
+  keys:
+    - ~/.ssh/id_rsa
+
+builder:
+  arch: amd64
+  args:
+    VERSION: ${VERSION}
+
+accessories:
+  redis:
+    image: redis:latest
+    roles:
+      - web
+    volumes:
+      - /var/lib/redis:/data

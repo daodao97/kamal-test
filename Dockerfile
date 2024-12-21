@@ -11,8 +11,8 @@ RUN CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -ldflags "-w -s -X main.versi
 FROM alpine:latest AS final
 
 WORKDIR /app
-COPY *.yml /app/
 COPY --from=builder /build/app /app/
+COPY *.yaml /app/
 
 RUN apk update && \
     apk add --no-cache sudo tzdata

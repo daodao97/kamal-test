@@ -4,15 +4,19 @@ concurrency:
   cancel-in-progress: true
 on:
   push:
-    branches:
-      - release
+    tags:
+      - 'v*'
+      
 jobs:
   deploy:
     runs-on: ubuntu-latest
     env:
       KAMAL_REGISTRY_PASSWORD: ${{ secrets.KAMAL_REGISTRY_PASSWORD }}
+      VERSION: ${{ github.ref_name }}
     steps:
       - uses: actions/checkout@v4
+      - name: Set version without v prefix
+        run: echo "VERSION=${VERSION#v}" >> $GITHUB_ENV
       - name: Login to GitHub Container Registry
         uses: docker/login-action@v3
         with:
